@@ -3,6 +3,7 @@ import { PageProvider } from './context/PageContext';
 import PageEditor from './components/Editor/PageEditor';
 import PhonePreview from './components/preview/PhonePreview';
 import AdminDashboard from './components/Admin/AdminDashboard';
+import HelpButton from './components/shared/HelpButton';
 import { Lock, X } from 'lucide-react';
 
 export default function App() {
@@ -175,6 +176,9 @@ export default function App() {
             </div>
           </div>
         )}
+
+        {/* Bouton d'aide flottant */}
+        <HelpButton />
 
       </div>
     </PageProvider>

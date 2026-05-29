@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart3, Users, FileText, TrendingUp, Lock, LogOut, Activity, Zap, Shield, Clock, ArrowUpRight, Sparkles } from 'lucide-react';
+import HelpButton from '../shared/HelpButton';
 
 /**
  * Composant AdminDashboard
@@ -277,6 +278,9 @@ export default function AdminDashboard({ onLogout }) {
           </div>
         </div>
       </div>
+
+      {/* Bouton d'aide flottant */}
+      <HelpButton />
     </div>
   );
 }

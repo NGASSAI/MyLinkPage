@@ -1,0 +1,87 @@
+import React, { useContext } from 'react';
+import { PageContext } from '../../context/PageContext';
+
+const THEMES = {
+  minimalist: {
+    bg: 'bg-white',
+    text: 'text-slate-900',
+    bio: 'text-slate-500',
+    button: 'bg-slate-900 text-white hover:bg-slate-800',
+  },
+  'pastel-gradient': {
+    bg: 'bg-gradient-to-b from-violet-100 via-pink-100 to-blue-100',
+    text: 'text-slate-900',
+    bio: 'text-slate-600',
+    button: 'bg-white text-slate-900 hover:bg-slate-50 shadow-sm',
+  },
+  cyberpunk: {
+    bg: 'bg-gradient-to-b from-slate-950 via-violet-950 to-fuchsia-950',
+    text: 'text-cyan-200',
+    bio: 'text-fuchsia-300/80',
+    button: 'bg-fuchsia-500 text-slate-950 hover:bg-fuchsia-400',
+  },
+  sombre: {
+    bg: 'bg-zinc-950',
+    text: 'text-slate-100',
+    bio: 'text-slate-400',
+    button: 'bg-slate-800 text-white hover:bg-slate-700',
+  },
+};
+
+export default function PhonePreview() {
+  const { pageData } = useContext(PageContext);
+
+  // On récupère le style du thème sélectionné (ou le minimaliste par défaut)
+  const currentTheme = THEMES[pageData.theme] || THEMES.minimalist;
+
+  return (
+    <div className="flex justify-center items-center p-6 bg-slate-100 min-h-[80vh] w-full">
+      
+      {/* Conteneur Extérieur du Téléphone (Mockup) */}
+      <div className="relative w-[360px] h-[740px] bg-black rounded-[50px] p-3 shadow-2xl border-4 border-slate-800 ring-1 ring-slate-900/10 flex-shrink-0">
+        
+        {/* Écran Interne du Téléphone */}
+        <div className={`w-full h-full rounded-[40px] overflow-y-auto no-scrollbar relative flex flex-col items-center pt-12 px-6 transition-all duration-300 ${currentTheme.bg}`}>
+          
+          {/* L'encoche (Notch) du smartphone */}
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-5 w-36 bg-black rounded-b-2xl z-20"></div>
+
+          {/* SECTION PROFIL */}
+          <div className="flex flex-col items-center text-center mb-8 w-full z-10">
+            {/* Image de profil */}
+            <img 
+              src={pageData.avatar || "https://via.placeholder.com/150"} 
+              alt={pageData.username}
+              className="w-24 h-24 rounded-full object-cover border-2 border-white shadow-md mb-4"
+            />
+            {/* Nom d'utilisateur */}
+            <h2 className={`text-xl font-bold tracking-tight mb-1 ${currentTheme.text}`}>
+              {pageData.username || "Votre Nom"}
+            </h2>
+            {/* Biographie */}
+            <p className={`text-sm max-w-[250px] leading-relaxed ${currentTheme.bio}`}>
+              {pageData.bio || "Votre biographie apparaîtra ici..."}
+            </p>
+          </div>
+
+          {/* SECTION LIENS */}
+          <div className="w-full flex flex-col gap-4 mb-8 z-10">
+            {pageData.links.map((link) => (
+              <a
+                key={link.id}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`w-full py-3.5 px-4 text-center font-medium rounded-2xl text-sm transition-all duration-200 transform hover:scale-[1.02] block ${currentTheme.button}`}
+              >
+                {link.title || "Lien sans titre"}
+              </a>
+            ))}
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  );
+}

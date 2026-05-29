@@ -1,0 +1,21 @@
+import React from 'react';
+import ProfileForm from './ProfileForm';
+import ThemeSelector from './ThemeSelector';
+import LinksManager from './LinksManager';
+
+export default function PageEditor() {
+  return (
+    <div className="w-full max-w-xl bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col gap-8 h-[80vh] overflow-y-auto no-scrollbar">
+      <div>
+        <h1 className="text-2xl font-bold text-slate-900">Éditeur de Page</h1>
+        <p className="text-sm text-slate-500">Personnalisez votre micro-page en temps réel</p>
+      </div>
+
+      <ProfileForm />
+      <hr className="border-slate-100" />
+      <ThemeSelector />
+      <hr className="border-slate-100" />
+      <LinksManager />
+    </div>
+  );
+}

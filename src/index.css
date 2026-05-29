@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+/* ===== ANIMATIONS PERSONNALISÉES ===== */
+
+/* Animation d'apparition progressive */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation de fondu simple */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animation de rotation lente */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Classes d'animation réutilisables */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* ===== SCROLLBAR PERSONNALISÉE ===== */
+
+/* Masquer la scrollbar pour tous les navigateurs */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE et Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Masquer la scrollbar pour Chrome, Safari, Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===== STYLES GLOBAUX ===== */
+
+/* Assure que le body et html prennent toute la hauteur */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Lissage du texte */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

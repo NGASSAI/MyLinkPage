@@ -1,0 +1,36 @@
+import React, { useContext } from 'react';
+import { PageContext } from '../../context/PageContext';
+
+export default function ProfileForm() {
+  const { pageData, updateProfile } = useContext(PageContext);
+
+  return (
+    <div className="flex flex-col gap-4">
+      <h2 className="text-lg font-semibold text-slate-800">Mon Profil</h2>
+      
+      {/* Champ Nom */}
+      <div className="flex flex-col gap-1.5">
+        <label className="text-xs font-medium text-slate-600 uppercase tracking-wider">Nom</label>
+        <input
+          type="text"
+          value={pageData.username}
+          onChange={(e) => updateProfile({ username: e.target.value })}
+          placeholder="Ex: Nathalie Ngassai"
+          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:bg-white transition-all"
+        />
+      </div>
+
+      {/* Champ Biographie */}
+      <div className="flex flex-col gap-1.5">
+        <label className="text-xs font-medium text-slate-600 uppercase tracking-wider">Bio</label>
+        <textarea
+          value={pageData.bio}
+          onChange={(e) => updateProfile({ bio: e.target.value })}
+          placeholder="Ex: Développeuse Front-end React..."
+          rows="3"
+          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:bg-white transition-all resize-none"
+        />
+      </div>
+    </div>
+  );
+}

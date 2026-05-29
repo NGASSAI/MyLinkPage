@@ -7,7 +7,7 @@ export const PageProvider = ({ children }) => {
   const defaultState = {
     // Infos de profil
     username: "Nathan Ngassai",
-    bio: "Développeur Front-end passionné par React et Tailwind CSS",
+    bio: "Développeur web passionné ",
     avatar: "https://via.placeholder.com/150",
     
     // Personnalisation visuelle
@@ -16,8 +16,8 @@ export const PageProvider = ({ children }) => {
     
     // Liens de navigation
     links: [
-      { id: '1', title: 'Mon Portfolio', url: 'https://mon-portfolio.com' },
-      { id: '2', title: 'Mon GitHub', url: 'https://github.com' }
+      { id: '1', title: 'Portfolio', url: 'https://mon-portfolio.com' },
+      { id: '2', title: 'GitHub', url: 'https://github.com' }
     ],
     
     // Réseaux sociaux avec toutes les plateformes

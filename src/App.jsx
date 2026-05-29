@@ -12,8 +12,8 @@ export default function App() {
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
 
-  // Mot de passe admin requis
-  const ADMIN_PASSWORD = 'nathan2045';
+  // Mot de passe admin depuis les variables d'environnement
+  const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'admin';
 
   // Incrémenter le compteur de visiteurs au chargement de l'application
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function App() {
   const handleLogin = (e) => {
     e.preventDefault();
     
-    if (password === ADMIN_PASSWORD) {
+    if (password.trim() === ADMIN_PASSWORD.trim()) {
       setIsAdmin(true);
       setShowLoginModal(false);
       setPassword('');

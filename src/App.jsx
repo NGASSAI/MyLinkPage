@@ -13,7 +13,7 @@ export default function App() {
   const [loginError, setLoginError] = useState('');
 
   // Mot de passe admin requis
-  const ADMIN_PASSWORD = 'nathan2045';
+  const ADMIN_PASSWORD = '';
 
   // Incrémenter le compteur de visiteurs au chargement de l'application
   useEffect(() => {

@@ -148,7 +148,7 @@ export const SOCIAL_PLATFORMS = [
     color: 'text-green-500 hover:text-green-600',
     placeholder: 'https://wa.me/1234567890',
     validation: {
-      regex: /^(https?:\/\/)?(www\.)?(wa\.me\/[0-9]{6,}|api\.whatsapp\.com\/send\?phone=[0-9]{6,})([?&].*)?$/i,
+      regex: /^(https?:\/\/)?(wa\.me|api\.whatsapp\.com).*/i,
       error: 'URL WhatsApp attendue, par ex. https://wa.me/1234567890'
     }
   },
@@ -159,7 +159,7 @@ export const SOCIAL_PLATFORMS = [
     color: 'text-slate-900 hover:text-slate-700',
     placeholder: 'https://github.com/nom-utilisateur',
     validation: {
-      regex: /^https?:\/\/(www\.)?github\.com\/[A-Za-z0-9_-]+\/?$/i,
+      regex: /^https?:\/\/(www\.)?github\.com\/.+/i,
       error: 'URL GitHub attendue, par ex. https://github.com/nom-utilisateur'
     }
   },
@@ -170,7 +170,7 @@ export const SOCIAL_PLATFORMS = [
     color: 'text-red-600 hover:text-red-500',
     placeholder: 'mailto:email@example.com',
     validation: {
-      regex: /^(mailto:)?[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i,
+      regex: /^(mailto:)?[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/i,
       error: 'Adresse e-mail attendue, par ex. mailto:email@example.com ou email@example.com'
     }
   },
@@ -181,7 +181,7 @@ export const SOCIAL_PLATFORMS = [
     color: 'text-blue-500 hover:text-blue-600',
     placeholder: 'https://mon-portfolio.com',
     validation: {
-      regex: /^https?:\/\/.+$/i,
+      regex: /^https?:\/\/.+/i,
       error: 'URL de portfolio attendue, par ex. https://mon-portfolio.com'
     }
   },
@@ -192,7 +192,7 @@ export const SOCIAL_PLATFORMS = [
     color: 'text-blue-600 hover:text-blue-700',
     placeholder: 'https://www.facebook.com/nom.utilisateur',
     validation: {
-      regex: /^https?:\/\/(www\.)?facebook\.com\/[A-Za-z0-9_.-]+\/?$/i,
+      regex: /^https?:\/\/(www\.)?facebook\.com\/.+/i,
       error: 'URL Facebook attendue, par ex. https://www.facebook.com/nom.utilisateur'
     }
   },
@@ -203,7 +203,7 @@ export const SOCIAL_PLATFORMS = [
     color: 'text-blue-700 hover:text-blue-800',
     placeholder: 'https://www.linkedin.com/in/nom-utilisateur',
     validation: {
-      regex: /^https?:\/\/(www\.)?linkedin\.com\/(in|company)\/[A-Za-z0-9_-]+\/?$/i,
+      regex: /^https?:\/\/(www\.)?linkedin\.com\/.+/i,
       error: 'URL LinkedIn attendue, par ex. https://www.linkedin.com/in/nom-utilisateur'
     }
   },
@@ -214,7 +214,7 @@ export const SOCIAL_PLATFORMS = [
     color: 'text-red-600 hover:text-red-700',
     placeholder: 'https://www.youtube.com/c/nomchaine',
     validation: {
-      regex: /^https?:\/\/(www\.)?(youtube\.com\/(channel|c|user)\/[A-Za-z0-9_-]+|youtu\.be\/[A-Za-z0-9_-]+|youtube\.com\/watch\?v=[A-Za-z0-9_-]+)([?&].*)?$/i,
+      regex: /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+/i,
       error: 'URL YouTube attendue, par ex. https://www.youtube.com/c/nomchaine'
     }
   },
@@ -225,7 +225,7 @@ export const SOCIAL_PLATFORMS = [
     color: 'text-pink-500 hover:text-pink-600',
     placeholder: 'https://www.tiktok.com/@nomutilisateur',
     validation: {
-      regex: /^https?:\/\/(www\.)?tiktok\.com\/@[A-Za-z0-9_.-]+\/?$/i,
+      regex: /^https?:\/\/(www\.)?tiktok\.com\/.+/i,
       error: 'URL TikTok attendue, par ex. https://www.tiktok.com/@nomutilisateur'
     }
   },

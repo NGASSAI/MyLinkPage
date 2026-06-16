@@ -12,6 +12,17 @@ import publicRoutes from './routes/public.js';
 
 const app = express();
 app.disable('x-powered-by');
+
+// Timeout global pour éviter que les requêtes bloquées par SQLite/Prisma restent en attente.
+app.use((req, res, next) => {
+  res.setTimeout(4000, () => {
+    if (!res.headersSent) {
+      res.status(504).json({ message: 'La base de données (Prisma/SQLite) a mis trop de temps à répondre.' });
+    }
+  });
+  next();
+});
+
 app.use(helmet());
 app.set('trust proxy', process.env.NODE_ENV === 'production');
 

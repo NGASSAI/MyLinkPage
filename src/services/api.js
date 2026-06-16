@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || `${window.location.origin}/api`;
 
 function authHeader(token) {
   return token ? { Authorization: `Bearer ${token}` } : {};
@@ -14,16 +14,8 @@ async function request(path, options = {}) {
   });
 
   if (!response.ok) {
-    const error = new Error(`API request failed (${response.status}) ${response.statusText}`);
-    error.status = response.status;
-    const text = await response.text();
-    error.raw = text;
-    try {
-      error.details = text ? JSON.parse(text) : null;
-    } catch (e) {
-      error.details = null;
-    }
-    throw error;
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || `Erreur serveur : ${response.status}`);
   }
 
   return response.json();
@@ -48,10 +40,20 @@ export async function trackClick(payload) {
 }
 
 export async function adminLogin(email, password) {
-  return request('/auth/login', {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({ email, password }),
   });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || `Erreur serveur : ${response.status}`);
+  }
+
+  return response.json();
 }
 
 export async function getAdminAnalytics(token) {

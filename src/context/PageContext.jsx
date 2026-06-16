@@ -9,7 +9,7 @@ export const PageProvider = ({ children }) => {
     // Infos de profil
     username: "Nathan Ngassai",
     bio: "Développeur web passionné ",
-    avatar: "https://via.placeholder.com/150",
+    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
     
     // Personnalisation visuelle
     theme: "minimalist",

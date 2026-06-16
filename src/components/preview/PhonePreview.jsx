@@ -53,11 +53,13 @@ export default function PhonePreview() {
 
               {/* Image d'avatar */}
               <img 
-                src={pageData.avatar || 'https://via.placeholder.com/150'} 
+                src={pageData.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'} 
                 alt={pageData.username}
                 className="relative w-24 h-24 rounded-full object-cover border-4 border-white shadow-xl"
                 onError={(e) => {
-                  e.currentTarget.src = 'https://via.placeholder.com/150';
+                  if (e.currentTarget.src !== SVG_PLACEHOLDER) {
+                    e.currentTarget.src = SVG_PLACEHOLDER;
+                  }
                 }}
               />
             </div>

@@ -1,8 +1,8 @@
 import React, { useContext, useRef } from 'react';
 import { PageContext } from '../../context/PageContext';
+import placeholderImage from '../../assets/téléchargement.jpeg';
 
-// SVG placeholder en data URL (pas de requête réseau)
-const SVG_PLACEHOLDER = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'%3E%3Crect width='150' height='150' fill='%23e2e8f0'/%3E%3Ccircle cx='75' cy='50' r='25' fill='%239ca3af'/%3E%3Cpath d='M30 120 Q75 80 120 120' fill='%239ca3af'/%3E%3C/svg%3E`;
+const FALLBACK_IMAGE = placeholderImage;
 
 /**
  * Composant d'édition du profil
@@ -54,13 +54,12 @@ export default function ProfileForm() {
         <div className="flex items-center gap-4">
           <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-slate-200 shadow-md bg-slate-100">
             <img
-              src={pageData.avatar || SVG_PLACEHOLDER}
+              src={pageData.avatar || FALLBACK_IMAGE}
               alt="Avatar"
               className="w-full h-full object-cover"
               onError={(e) => {
-                // Éviter la boucle infinie en utilisant un placeholder SVG
-                if (e.currentTarget.src !== SVG_PLACEHOLDER) {
-                  e.currentTarget.src = SVG_PLACEHOLDER;
+                if (e.currentTarget.src !== FALLBACK_IMAGE) {
+                  e.currentTarget.src = FALLBACK_IMAGE;
                 }
               }}
             />

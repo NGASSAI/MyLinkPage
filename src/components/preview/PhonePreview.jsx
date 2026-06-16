@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { PageContext } from '../../context/PageContext';
 import { THEMES, SOCIAL_PLATFORMS, validateSocialUrl } from '../../config/themeConfig';
+import placeholderImage from '../../assets/téléchargement.jpeg';
 
-// SVG placeholder en data URL (pas de requête réseau)
-const SVG_PLACEHOLDER = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'%3E%3Crect width='150' height='150' fill='%23e2e8f0'/%3E%3Ccircle cx='75' cy='50' r='25' fill='%239ca3af'/%3E%3Cpath d='M30 120 Q75 80 120 120' fill='%239ca3af'/%3E%3C/svg%3E`;
+const FALLBACK_IMAGE = placeholderImage;
 
 /**
  * Composant de prévisualisation du téléphone
@@ -53,12 +53,12 @@ export default function PhonePreview() {
 
               {/* Image d'avatar */}
               <img 
-                src={pageData.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'} 
+                src={pageData.avatar || FALLBACK_IMAGE} 
                 alt={pageData.username}
                 className="relative w-24 h-24 rounded-full object-cover border-4 border-white shadow-xl"
                 onError={(e) => {
-                  if (e.currentTarget.src !== SVG_PLACEHOLDER) {
-                    e.currentTarget.src = SVG_PLACEHOLDER;
+                  if (e.currentTarget.src !== FALLBACK_IMAGE) {
+                    e.currentTarget.src = FALLBACK_IMAGE;
                   }
                 }}
               />

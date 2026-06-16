@@ -28,10 +28,10 @@ export default function PhonePreview() {
     .filter(s => validateSocialUrl(s.id, s.url));
 
   return (
-    <div className="flex justify-center items-center p-6 bg-gradient-to-br from-slate-100 to-slate-200 min-h-[80vh] w-full rounded-3xl">
+    <div className="flex justify-center items-center p-6 bg-linear-to-br from-slate-100 to-slate-200 min-h-[80vh] w-full rounded-3xl">
       
       {/* ===== CONTENEUR MOCKUP TÉLÉPHONE ===== */}
-      <div className="relative w-[360px] h-[740px] bg-black rounded-[50px] p-3 shadow-2xl border-4 border-slate-800 ring-1 ring-slate-900/10 flex-shrink-0 overflow-hidden">
+      <div className="relative w-90 h-185 bg-black rounded-[50px] p-3 shadow-2xl border-4 border-slate-800 ring-1 ring-slate-900/10 shrink-0 overflow-hidden">
         
         {/* Encoche (Notch) du smartphone */}
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-7 w-40 bg-black rounded-b-3xl z-20"></div>
@@ -68,7 +68,7 @@ export default function PhonePreview() {
             </h2>
 
             {/* Biographie */}
-            <p className={`text-sm max-w-[250px] leading-relaxed ${currentTheme.bio}`}>
+            <p className={`text-sm max-w-62.5 leading-relaxed ${currentTheme.bio}`}>
               {pageData.bio || 'Votre biographie apparaîtra ici...'}
             </p>
           </div>

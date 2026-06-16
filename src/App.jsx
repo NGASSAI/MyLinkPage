@@ -5,68 +5,68 @@ import PhonePreview from './components/preview/PhonePreview';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import HelpButton from './components/shared/HelpButton';
 import { Lock, X } from 'lucide-react';
+import { adminLogin, trackVisit } from './services/api';
 
 export default function App() {
-  // État pour l'authentification admin
   const [isAdmin, setIsAdmin] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [email, setEmail] = useState(import.meta.env.VITE_ADMIN_EMAIL ?? '');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
+  const [token, setToken] = useState(() => localStorage.getItem('admin_token'));
+  const [visitId, setVisitId] = useState(() => localStorage.getItem('visit_id'));
 
-  // Mot de passe admin depuis les variables d'environnement
-  const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'admin';
-
-  // Incrémenter le compteur de visiteurs au chargement de l'application
   useEffect(() => {
-    const incrementVisitorCount = () => {
-      const savedStats = localStorage.getItem('admin_stats');
-      if (savedStats) {
-        try {
-          const parsed = JSON.parse(savedStats);
-          parsed.totalVisitors = (parsed.totalVisitors || 0) + 1;
-          localStorage.setItem('admin_stats', JSON.stringify(parsed));
-        } catch (e) {
-          console.error('Erreur parsing stats:', e);
+    if (token) {
+      setIsAdmin(true);
+      localStorage.setItem('admin_token', token);
+    } else {
+      localStorage.removeItem('admin_token');
+    }
+  }, [token]);
+
+  useEffect(() => {
+    const registerVisit = async () => {
+      if (token || visitId) {
+        return;
+      }
+
+      try {
+        const visit = await trackVisit({
+          userAgent: navigator.userAgent,
+          referer: document.referrer || window.location.href,
+          country: '',
+        });
+        if (visit?.visit?.id) {
+          localStorage.setItem('visit_id', visit.visit.id);
+          setVisitId(String(visit.visit.id));
         }
-      } else {
-        // Initialiser avec 1 visiteur si aucune donnée n'existe
-        const initialStats = {
-          totalVisitors: 1,
-          totalPages: 0,
-          socialClicks: {
-            whatsapp: 0,
-            github: 0,
-            email: 0,
-            portfolio: 0,
-            facebook: 0,
-            linkedin: 0,
-            youtube: 0,
-            tiktok: 0,
-          }
-        };
-        localStorage.setItem('admin_stats', JSON.stringify(initialStats));
+      } catch (error) {
+        console.warn('Impossible d enregistrer la visite', error);
       }
     };
 
-    incrementVisitorCount();
-  }, []);
+    registerVisit();
+  }, [token, visitId]);
 
-  // Fonction de connexion admin
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    
-    if (password.trim() === ADMIN_PASSWORD.trim()) {
+    setLoginError('');
+
+    try {
+      const data = await adminLogin(email, password);
+      setToken(data.token);
       setIsAdmin(true);
       setShowLoginModal(false);
       setPassword('');
-      setLoginError('');
-    } else {
-      setLoginError('Mot de passe incorrect');
+    } catch (error) {
+      const message = error?.details?.error || error.message || 'Erreur de connexion';
+      setLoginError(message);
     }
   };
 
-  // Fonction de déconnexion admin
   const handleLogout = () => {
+    setToken(null);
     setIsAdmin(false);
   };
 
@@ -75,7 +75,7 @@ export default function App() {
     return (
       <PageProvider>
         <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col">
-          <AdminDashboard onLogout={handleLogout} />
+          <AdminDashboard onLogout={handleLogout} token={token} />
         </div>
       </PageProvider>
     );
@@ -89,13 +89,12 @@ export default function App() {
         {/* Barre de navigation simple */}
         <header className="w-full bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center">
           <span className="font-bold text-lg tracking-tight text-violet-600">
-            MyLinkPage <span className="text-xs text-slate-400 font-normal">| Générateur</span>
+            MyLinkPage <span className="text-xs text-slate-400 font-normal"></span>
           </span>
           <div className="flex items-center gap-3">
             <div className="text-xs bg-green-50 text-green-700 px-3 py-1 rounded-full font-medium border border-green-200">
-              Sauvegarde auto active
+              Connexion  prête
             </div>
-            {/* Bouton discret de connexion Admin */}
             <button
               onClick={() => setShowLoginModal(true)}
               className="text-xs text-slate-400 hover:text-violet-600 transition-colors flex items-center gap-1"
@@ -144,8 +143,16 @@ export default function App() {
               <form onSubmit={handleLogin}>
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-slate-700 mb-2">
-                    Mot de passe
+                    Adresse email
                   </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="admin@example.com"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:bg-white transition-all mb-4"
+                  />
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Mot de passe</label>
                   <input
                     type="password"
                     value={password}

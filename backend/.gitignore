@@ -1,0 +1,7 @@
+# Ne pas versionner les dépendances et les fichiers locaux du backend
+node_modules
+.env
+.env.local
+*.db
+*.db-journal
+.DS_Store

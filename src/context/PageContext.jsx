@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { getPublicProfile } from '../services/api';
 
 export const PageContext = createContext();
 
@@ -39,7 +40,6 @@ export const PageProvider = ({ children }) => {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        // Fusionner avec les valeurs par défaut pour éviter les propriétés undefined
         return { ...defaultState, ...parsed };
       } catch (e) {
         console.error('Erreur parsing localStorage:', e);
@@ -49,7 +49,37 @@ export const PageProvider = ({ children }) => {
     return defaultState;
   });
 
-  // Sauvegarde automatique dans le LocalStorage à chaque modification
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadPublicProfile = async () => {
+      try {
+        const data = await getPublicProfile();
+        if (data?.profile) {
+          // Mapper les données du backend aux champs de PageContext
+          const backendProfile = {
+            username: data.profile.username || data.profile.name,
+            bio: data.profile.bio,
+            avatar: data.profile.avatar,
+            theme: data.profile.theme,
+            typography: data.profile.typography,
+            links: data.profile.links || [],
+            socialLinks: data.profile.socialLinks || [],
+          };
+          setPageData(prev => ({ ...prev, ...backendProfile }));
+        }
+      } catch (err) {
+        console.warn('Impossible de charger le profil public', err);
+        setError(err?.details?.error || err.message || 'Erreur de chargement');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPublicProfile();
+  }, []);
+
   useEffect(() => {
     localStorage.setItem('micro_page_data', JSON.stringify(pageData));
   }, [pageData]);

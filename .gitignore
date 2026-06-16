@@ -7,15 +7,30 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node modules
 node_modules
+backend/node_modules
+
+# Build output
 dist
 dist-ssr
-*.local
+.deployment
+.next
+.out
 
-# Environment variables
+# Local env files
 .env.local
 .env
 .env.*.local
+backend/.env
+backend/.env.local
+
+# Runtime artifacts
+.vercel
+*.db
+*.db-journal
+backend/*.db
+backend/*.db-journal
 
 # Editor directories and files
 .vscode/*

@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int              @id @default(autoincrement())
+  email          String           @unique
+  password       String
+  name           String
+  bio            String?
+  avatar         String?
+  themeId        String?          @map("theme_id")
+  fontId         String?          @map("font_id")
+  createdAt      DateTime         @default(now()) @map("created_at")
+  links          Link[]
+  socialNetworks SocialNetwork[]
+  visits         Visit[]
+}
+
+model Link {
+  id       Int     @id @default(autoincrement())
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   Int
+  title    String
+  url      String
+  icon     String?
+  order    Int     @default(0)
+  active   Boolean @default(true)
+  clicks   Click[]
+
+  @@index([userId])
+}
+
+model SocialNetwork {
+  id       Int    @id @default(autoincrement())
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   Int
+  platform String
+  url      String
+  active   Boolean @default(true)
+
+  @@index([userId])
+}
+
+model Visit {
+  id         Int      @id @default(autoincrement())
+  visitedAt  DateTime @default(now()) @map("visited_at")
+  ip         String
+  userAgent  String?  @map("user_agent")
+  referer    String?
+  country    String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int?
+  clicks     Click[]
+
+  @@index([userId])
+}
+
+model Click {
+  id        Int      @id @default(autoincrement())
+  visit     Visit    @relation(fields: [visitId], references: [id], onDelete: Cascade)
+  visitId   Int
+  link      Link     @relation(fields: [linkId], references: [id], onDelete: Cascade)
+  linkId    Int
+  clickedAt DateTime @default(now()) @map("clicked_at")
+
+  @@index([visitId])
+  @@index([linkId])
+}

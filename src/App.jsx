@@ -50,20 +50,22 @@ export default function App() {
   }, [token, visitId]);
 
   const handleLogin = async (e) => {
-    console.log('1. Clic détecté sur le bouton');
     e.preventDefault();
+    console.log("👉 Formulaire soumis");
     setLoginError('');
 
     try {
-      console.log('2. Paramètres envoyés :', email);
+      console.log("🔍 URL de base de l'API détectée :", import.meta.env.VITE_API_BASE_URL || '/api');
+      console.log("📧 Tentative avec l'email :", email);
       const data = await adminLogin(email, password);
       setToken(data.token);
       setIsAdmin(true);
       setShowLoginModal(false);
       setPassword('');
-    } catch (error) {
-      console.error('Erreur attrapée dans le composant :', error);
-      const message = error?.details?.error || error.message || 'Erreur de connexion';
+    } catch (err) {
+      console.error("❌ CRASH DANS LE COMPOSANT DE CONNEXION :", err);
+      alert("Erreur de connexion : " + (err.message || "Erreur inconnue"));
+      const message = err?.details?.error || err.message || 'Erreur de connexion';
       setLoginError(message);
     }
   };

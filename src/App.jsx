@@ -55,7 +55,7 @@ export default function App() {
     setLoginError('');
 
     try {
-      console.log("🔍 URL de base de l'API détectée :", import.meta.env.VITE_API_BASE_URL || '/api');
+      console.log("🔍 URL de base de l'API détectée :", import.meta.env.VITE_API_BASE_URL || `${window.location.origin}/api`);
       console.log("📧 Tentative avec l'email :", email);
       const data = await adminLogin(email, password);
       setToken(data.token);

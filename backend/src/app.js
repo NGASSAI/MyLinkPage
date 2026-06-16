@@ -26,15 +26,15 @@ app.use(
   })
 );
 
-app.use('/auth', authRoutes);
-app.use('/admin/profile', profileRoutes);
-app.use('/admin/links', linksRoutes);
-app.use('/admin/socials', socialsRoutes);
-app.use('/admin/analytics', analyticsRoutes);
-app.use('/track', trackingRoutes);
-app.use('/public', publicRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/admin/profile', profileRoutes);
+app.use('/api/admin/links', linksRoutes);
+app.use('/api/admin/socials', socialsRoutes);
+app.use('/api/admin/analytics', analyticsRoutes);
+app.use('/api/track', trackingRoutes);
+app.use('/api/public', publicRoutes);
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.json({ message: 'API backend Linkpage active' });
 });
 

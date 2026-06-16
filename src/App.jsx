@@ -50,16 +50,19 @@ export default function App() {
   }, [token, visitId]);
 
   const handleLogin = async (e) => {
+    console.log('1. Clic détecté sur le bouton');
     e.preventDefault();
     setLoginError('');
 
     try {
+      console.log('2. Paramètres envoyés :', email);
       const data = await adminLogin(email, password);
       setToken(data.token);
       setIsAdmin(true);
       setShowLoginModal(false);
       setPassword('');
     } catch (error) {
+      console.error('Erreur attrapée dans le composant :', error);
       const message = error?.details?.error || error.message || 'Erreur de connexion';
       setLoginError(message);
     }
